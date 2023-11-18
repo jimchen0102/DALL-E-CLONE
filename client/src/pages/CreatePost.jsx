@@ -12,8 +12,10 @@ const CreatePost = () => {
     prompt: "",
     photo: "",
   });
-  const [generatingImg, setGeneratingImg] = useState(false);
+  const [generatingImage, setGeneratingImage] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const generateImage = () => {};
 
   const handleChange = () => {};
 
@@ -40,6 +42,7 @@ const CreatePost = () => {
             value={form.name}
             handleChange={handleChange}
           />
+
           <Field
             type="text"
             name="prompt"
@@ -50,6 +53,51 @@ const CreatePost = () => {
             isSurpriseMe
             handleSurpriseMe={handleSurpriseMe}
           />
+
+          <div className="relative flex justify-center items-center w-64 h-64 p-3 text-sm text-gray-900 bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+            {form.photo ? (
+              <img
+                src={form.photo}
+                alt={form.prompt}
+                className="w-full h-full object-contain"
+              />
+            ) : (
+              <img
+                src={preview}
+                alt="preview"
+                className="w-1/3 h-1/3 object-contain opacity-40"
+              />
+            )}
+
+            {generatingImage && (
+              <div className="absolute inset-0 flex justify-center items-center bg-black/50 rounded-lg">
+                <Loader />
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="flex gap-5 mt-5">
+          <button
+            type="button"
+            onClick={generateImage}
+            className="w-full px-5 py-2.5 font-medium text-sm text-white text-center bg-green-700 rounded-md sm:w-auto"
+          >
+            {generatingImage ? "生成中..." : "生成"}
+          </button>
+        </div>
+
+        <div className="mt-10">
+          <p className="text-sm text-[#666e75]">
+            一旦生成所需的圖像後，您可以與社區中的其他人分享。
+          </p>
+          <button
+            type="submit"
+            onClick={generateImage}
+            className="w-full px-5 py-2.5 mt-3 font-medium text-sm text-white text-center bg-[#6469ff] rounded-md sm:w-auto"
+          >
+            {loading ? "分享中..." : "與社區分享"}
+          </button>
         </div>
       </form>
     </section>
