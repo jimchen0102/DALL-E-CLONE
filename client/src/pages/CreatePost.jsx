@@ -15,7 +15,29 @@ const CreatePost = () => {
   const [generatingImage, setGeneratingImage] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const generateImage = () => {};
+  const generateImage = async () => {
+    if (!form.prompt) return;
+
+    try {
+      setGeneratingImage(true);
+      const response = await fetch("http://localhost:8080/api/v1/dalle", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          prompt: form.prompt,
+        }),
+      });
+
+      const data = await response.json();
+      setForm({ ...form, photo: `data:image/jpeg;base64,${data.photo}` });
+    } catch (err) {
+      alert(err);
+    } finally {
+      setGeneratingImage(false);
+    }
+  };
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -29,7 +51,7 @@ const CreatePost = () => {
   };
 
   return (
-    <section className="max-w-7xl mx-auto">
+    <section className="max-w-3xl mx-auto">
       <div>
         <h1 className="font-extrabold text-[#222328] text-[32px]">新增</h1>
         <p className="max-w-[500px] mt-2 text-[#666e75]">
@@ -37,7 +59,7 @@ const CreatePost = () => {
         </p>
       </div>
 
-      <form className="max-w-3xl mt-16" onSubmit={handleSubmit}>
+      <form className="mt-16" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-5">
           <Field
             type="text"
