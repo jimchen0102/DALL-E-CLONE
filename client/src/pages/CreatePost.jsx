@@ -50,7 +50,7 @@ const CreatePost = () => {
       setLoading(true);
 
       try {
-        const response = await fetch("http://localhost:8080/api/v1/posts", {
+        const response = await fetch("http://localhost:8080/api/v1/post", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -143,7 +143,7 @@ const CreatePost = () => {
           </p>
           <button
             type="submit"
-            onClick={generateImage}
+            onClick={handleSubmit}
             className="w-full px-5 py-2.5 mt-3 font-medium text-sm text-white text-center bg-[#6469ff] rounded-md sm:w-auto"
           >
             {loading ? "分享中..." : "與社區分享"}
