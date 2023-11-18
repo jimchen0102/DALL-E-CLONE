@@ -17,11 +17,16 @@ const CreatePost = () => {
 
   const generateImage = () => {};
 
-  const handleChange = () => {};
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = () => {};
 
-  const handleSurpriseMe = () => {};
+  const handleSurpriseMe = () => {
+    const randomPrompt = getRandomPrompt(form.prompt);
+    setForm({ ...form, prompt: randomPrompt });
+  };
 
   return (
     <section className="max-w-7xl mx-auto">
@@ -48,7 +53,7 @@ const CreatePost = () => {
             name="prompt"
             label="指令"
             placeholder="A plush toy robot sitting against a yellow wall"
-            value={form.name}
+            value={form.prompt}
             handleChange={handleChange}
             isSurpriseMe
             handleSurpriseMe={handleSurpriseMe}
