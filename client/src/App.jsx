@@ -13,13 +13,13 @@ const App = () => {
         </Link>
         <Link
           to="/create-post"
-          className="px-4 py-2 font-inter font-medium bg-[#6469ff] text-white rounded-md"
+          className="px-4 py-2 font-inter font-medium text-sm text-white bg-[#6469ff] rounded-md"
         >
-          Create
+          生成圖片
         </Link>
       </header>
 
-      <main className="w-full min-h-[calc(100vh-73px)] px-4 py-8 bg-[#f9fafe] sm:p-8">
+      <main className="w-full min-h-[calc(100vh-69px)] px-4 py-8 bg-[#f9fafe] sm:p-8">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/create-post" element={<CreatePost />} />

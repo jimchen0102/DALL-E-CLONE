@@ -5,7 +5,27 @@ import { Loader, Card, Field } from "../components";
 const Home = () => {
   const [searchText, setSearchText] = useState("");
   const [posts, setPosts] = useState([]);
+  const [searchPosts, setSearchPosts] = useState([]);
+  const [searchTimeout, setSearchTimeout] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const handleSearchChange = (e) => {
+    clearTimeout(searchTimeout);
+
+    setSearchText(e.target.value);
+
+    setSearchTimeout(
+      setTimeout(() => {
+        const searchResults = posts.filter(
+          (post) =>
+            post.name.toLowerCase().includes(searchText.toLowerCase()) ||
+            post.prompt.toLowerCase().includes(searchText.toLowerCase())
+        );
+
+        setSearchPosts(searchResults);
+      }, 500)
+    );
+  };
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -43,7 +63,13 @@ const Home = () => {
       </div>
 
       <div className="mt-16">
-        <Field />
+        <Field
+          type="text"
+          name="text"
+          placeholder="Search posts"
+          value={searchText}
+          handleChange={handleSearchChange}
+        />
       </div>
 
       <div className="mt-10">
@@ -59,13 +85,9 @@ const Home = () => {
               </h2>
             )}
             <div className="grid grid-cols-1 gap-3 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
-              {searchText ? (
-                <h2 className="mt-5 font-bold text-xl text-[#6449ff] uppercase">
-                  沒有找到圖像
-                </h2>
-              ) : (
-                posts.map((post) => <Card key={post._id} {...post} />)
-              )}
+              {searchText
+                ? searchPosts.map((post) => <Card key={post._id} {...post} />)
+                : posts.map((post) => <Card key={post._id} {...post} />)}
             </div>
           </>
         )}
