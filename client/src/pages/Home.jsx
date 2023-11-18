@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
+
 import { Loader, Card, Field } from "../components";
 
 const Home = () => {
-  const [searchText, setSearchText] = useState("aa");
+  const [searchText, setSearchText] = useState("");
   const [posts, setPosts] = useState([]);
   const [loading, setIsLoading] = useState(false);
 
